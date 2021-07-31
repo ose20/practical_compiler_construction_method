@@ -1,0 +1,22 @@
+lexer.cmo : \
+    parser.cmi
+lexer.cmx : \
+    parser.cmx
+main.cmo : \
+    toplevel.cmo \
+    parser.cmi \
+    lexer.cmo
+main.cmx : \
+    toplevel.cmx \
+    parser.cmx \
+    lexer.cmx
+parser.cmo : \
+    toplevel.cmo \
+    parser.cmi
+parser.cmx : \
+    toplevel.cmx \
+    parser.cmi
+parser.cmi : \
+    toplevel.cmo
+toplevel.cmo :
+toplevel.cmx :

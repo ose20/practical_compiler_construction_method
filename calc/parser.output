@@ -1,0 +1,243 @@
+   0  $accept : %entry% $end
+
+   1  prog : expr EOI
+   2       | QUIT EOI
+
+   3  expr : NUM
+   4       | LP expr RP
+   5       | expr PLUS expr
+   6       | expr MINUS expr
+   7       | expr TIMES expr
+   8       | expr DIV expr
+   9       | MINUS expr
+
+  10  %entry% : '\001' prog
+
+state 0
+	$accept : . %entry% $end  (0)
+
+	'\001'  shift 1
+	.  error
+
+	%entry%  goto 2
+
+
+state 1
+	%entry% : '\001' . prog  (10)
+
+	NUM  shift 3
+	MINUS  shift 4
+	LP  shift 5
+	QUIT  shift 6
+	.  error
+
+	prog  goto 7
+	expr  goto 8
+
+
+state 2
+	$accept : %entry% . $end  (0)
+
+	$end  accept
+
+
+state 3
+	expr : NUM .  (3)
+
+	.  reduce 3
+
+
+state 4
+	expr : MINUS . expr  (9)
+
+	NUM  shift 3
+	MINUS  shift 4
+	LP  shift 5
+	.  error
+
+	expr  goto 9
+
+
+state 5
+	expr : LP . expr RP  (4)
+
+	NUM  shift 3
+	MINUS  shift 4
+	LP  shift 5
+	.  error
+
+	expr  goto 10
+
+
+state 6
+	prog : QUIT . EOI  (2)
+
+	EOI  shift 11
+	.  error
+
+
+state 7
+	%entry% : '\001' prog .  (10)
+
+	.  reduce 10
+
+
+state 8
+	prog : expr . EOI  (1)
+	expr : expr . PLUS expr  (5)
+	expr : expr . MINUS expr  (6)
+	expr : expr . TIMES expr  (7)
+	expr : expr . DIV expr  (8)
+
+	PLUS  shift 12
+	MINUS  shift 13
+	TIMES  shift 14
+	DIV  shift 15
+	EOI  shift 16
+	.  error
+
+
+state 9
+	expr : expr . PLUS expr  (5)
+	expr : expr . MINUS expr  (6)
+	expr : expr . TIMES expr  (7)
+	expr : expr . DIV expr  (8)
+	expr : MINUS expr .  (9)
+
+	TIMES  shift 14
+	DIV  shift 15
+	PLUS  reduce 9
+	MINUS  reduce 9
+	RP  reduce 9
+	EOI  reduce 9
+
+
+state 10
+	expr : LP expr . RP  (4)
+	expr : expr . PLUS expr  (5)
+	expr : expr . MINUS expr  (6)
+	expr : expr . TIMES expr  (7)
+	expr : expr . DIV expr  (8)
+
+	PLUS  shift 12
+	MINUS  shift 13
+	TIMES  shift 14
+	DIV  shift 15
+	RP  shift 17
+	.  error
+
+
+state 11
+	prog : QUIT EOI .  (2)
+
+	.  reduce 2
+
+
+state 12
+	expr : expr PLUS . expr  (5)
+
+	NUM  shift 3
+	MINUS  shift 4
+	LP  shift 5
+	.  error
+
+	expr  goto 18
+
+
+state 13
+	expr : expr MINUS . expr  (6)
+
+	NUM  shift 3
+	MINUS  shift 4
+	LP  shift 5
+	.  error
+
+	expr  goto 19
+
+
+state 14
+	expr : expr TIMES . expr  (7)
+
+	NUM  shift 3
+	MINUS  shift 4
+	LP  shift 5
+	.  error
+
+	expr  goto 20
+
+
+state 15
+	expr : expr DIV . expr  (8)
+
+	NUM  shift 3
+	MINUS  shift 4
+	LP  shift 5
+	.  error
+
+	expr  goto 21
+
+
+state 16
+	prog : expr EOI .  (1)
+
+	.  reduce 1
+
+
+state 17
+	expr : LP expr RP .  (4)
+
+	.  reduce 4
+
+
+state 18
+	expr : expr . PLUS expr  (5)
+	expr : expr PLUS expr .  (5)
+	expr : expr . MINUS expr  (6)
+	expr : expr . TIMES expr  (7)
+	expr : expr . DIV expr  (8)
+
+	TIMES  shift 14
+	DIV  shift 15
+	PLUS  reduce 5
+	MINUS  reduce 5
+	RP  reduce 5
+	EOI  reduce 5
+
+
+state 19
+	expr : expr . PLUS expr  (5)
+	expr : expr . MINUS expr  (6)
+	expr : expr MINUS expr .  (6)
+	expr : expr . TIMES expr  (7)
+	expr : expr . DIV expr  (8)
+
+	TIMES  shift 14
+	DIV  shift 15
+	PLUS  reduce 6
+	MINUS  reduce 6
+	RP  reduce 6
+	EOI  reduce 6
+
+
+state 20
+	expr : expr . PLUS expr  (5)
+	expr : expr . MINUS expr  (6)
+	expr : expr . TIMES expr  (7)
+	expr : expr TIMES expr .  (7)
+	expr : expr . DIV expr  (8)
+
+	.  reduce 7
+
+
+state 21
+	expr : expr . PLUS expr  (5)
+	expr : expr . MINUS expr  (6)
+	expr : expr . TIMES expr  (7)
+	expr : expr . DIV expr  (8)
+	expr : expr DIV expr .  (8)
+
+	.  reduce 8
+
+
+13 terminals, 4 nonterminals
+11 grammar rules, 22 states

@@ -1,5 +1,5 @@
 {
-  open Parser0
+  open Parser
   exception Lexing of string
 }
 
