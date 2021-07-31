@@ -1,5 +1,6 @@
-%.c*
+.DS_Store
+*.c*
 lexer.ml
 parser.mli
 parser.ml
-
+main
