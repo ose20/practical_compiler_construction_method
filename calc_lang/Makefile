@@ -11,7 +11,6 @@ DEPEND  = lexer.ml parser.ml
 
 all: .depend $(APP)
 
-
 $(APP): $(OBJS)
 	@echo Linking $@
 	$(OCAMLC) -o $@ $(OCAMLFLAGS) $(OBJS)
