@@ -20,11 +20,27 @@ print_ast.cmx : \
     parser.cmx \
     lexer.cmx \
     ast.cmx
-semant.cmo :
-semant.cmx :
 table.cmo : \
     types.cmo
 table.cmx : \
     types.cmx
+tcheck_only.cmo : \
+    typecheck.cmo \
+    parser.cmi \
+    lexer.cmo \
+    ast.cmo
+tcheck_only.cmx : \
+    typecheck.cmx \
+    parser.cmx \
+    lexer.cmx \
+    ast.cmx
+typecheck.cmo : \
+    types.cmo \
+    table.cmo \
+    ast.cmo
+typecheck.cmx : \
+    types.cmx \
+    table.cmx \
+    ast.cmx
 types.cmo :
 types.cmx :

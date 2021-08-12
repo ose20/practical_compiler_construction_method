@@ -2,13 +2,18 @@ APP 		= print_ast
 OCAMLC 		= ocamlc
 OCAMLDEP 	= ocamldep
 
-OBJS = lexer.cmo parser.cmo types.cmo ast.cmo print_ast.cmo
+OBJS1 = lexer.cmo parser.cmo types.cmo ast.cmo print_ast.cmo
+OBJS2 = lexer.cmo parser.cmo types.cmo ast.cmo table.cmo typecheck.cmo\
+            tcheck_only.cmo
 DEPEND = lexer.ml parser.ml
 
 all: .depend $(APP)
 
-$(APP): $(OBJS)
-	$(OCAMLC) -o $@ $(OBJS)
+$(APP): $(OBJS1)
+	$(OCAMLC) -o $@ $(OBJS1)
+
+tcheck_only : $(OBJS2)
+	$(OCAMLC) -o $@ $(OBJS2)
 
 # Common rules
 .SUFFIXES: .ml .mli .cmo .cmi .cmx

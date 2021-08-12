@@ -1,4 +1,4 @@
 open Types
-type varInfo = {ty: ty; offset: int; level: int}
-type funInfo = {formals: ty list; result: ty; level: int}
+type varInfo = {t: Types.t}
+type funInfo = {args_t: Types.t list; res_t: Types.t}
 type enventry = VarEntry of varInfo | FunEntry of funInfo

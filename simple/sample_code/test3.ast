@@ -1,0 +1,37 @@
+Block(
+  [VarDec(ArrayTyp (10,IntTyp),"a");
+   VarDec(IntTyp,"size");
+   FuncDec(
+    "sort",
+    [(IntTyp,"i")],
+    VoidTyp,
+    Block(
+      [FuncDec(
+        "min",
+        [(IntTyp,"j")],
+        VoidTyp,
+        Block(
+         [FuncDec(
+           "swap",
+           [(IntTyp,"i"); (IntTyp,"j")],
+           VoidTyp,
+           Block(
+            [VarDec(IntTyp,"tmp")],
+            [Assign(
+               Var "tmp",
+               VarExp(IndexedVar (Var "a",VarExp(Var "i")))
+             ); 
+             Assign(
+               IndexedVar (Var "a",VarExp(Var "i")),
+               VarExp(IndexedVar (Var "a",VarExp(Var "j")))
+             );
+             Assign(
+               IndexedVar (Var "a",VarExp(Var "j")),
+               VarExp(Var "tmp")
+             )
+            ]
+           )
+          )
+         ],
+         // stmt
+         [If(CallFunc("<",[VarExp(Var "j"); VarExp(Var "size")]),Block([],[If(CallFunc("<",[VarExp(IndexedVar (Var "a",VarExp(Var "j"))); VarExp(IndexedVar (Var "a",VarExp(Var "i")))]),CallProc("swap",[VarExp(Var "i"); VarExp(Var "j")]),None); CallProc("min",[CallFunc("+",[VarExp(Var "j"); IntExp(1)])])]),None)]))],[If(CallFunc("<",[VarExp(Var "i"); VarExp(Var "size")]),Block([],[CallProc("min",[CallFunc("+",[VarExp(Var "i"); IntExp(1)])]); CallProc("sort",[CallFunc("+",[VarExp(Var "i"); IntExp(1)])])]),None)]))],[CallProc("iprint",[IntExp(100)])])

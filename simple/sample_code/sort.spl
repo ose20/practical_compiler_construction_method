@@ -48,7 +48,6 @@
      }
 
      size = 10;
-     new(a);
      init();
      sprint("before sorting\n");
      print();
